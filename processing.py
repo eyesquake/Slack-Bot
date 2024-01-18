@@ -1,10 +1,11 @@
 import slack_sdk
 import pandas as pd
+from analysis import analysis_gpt
 
 # 판다스 출력 옵션 설정
-pd.set_option('display.max_rows', None)  # 행의 최대 출력 개수 설정 (None으로 설정하면 모든 행을 출력)
-pd.set_option('display.max_columns', None)  # 열의 최대 출력 개수 설정 (None으로 설정하면 모든 열을 출력)
-pd.set_option('display.max_colwidth', None)  # 열 너비의 최대 출력 길이 설정
+# pd.set_option('display.max_rows', None)  # 행의 최대 출력 개수 설정 (None으로 설정하면 모든 행을 출력)
+# pd.set_option('display.max_columns', None)  # 열의 최대 출력 개수 설정 (None으로 설정하면 모든 열을 출력)
+# pd.set_option('display.max_colwidth', None)  # 열 너비의 최대 출력 길이 설정
 #########################[데이터 처리]#########################
 # 엑셀 파일 읽기
 df = pd.read_excel('final.xlsx')
@@ -22,10 +23,15 @@ df['대댓글'] = grouped['대댓글'].transform(lambda x : ' / '.join(x))
 # # 중복 행 제거
 df = df.drop_duplicates()
 
+# df를 문자열로 변환해서 출력
+# print(df.to_string(index=False))
 print(df)
-# 엑셀 파일로 저장
-df.to_excel('test.xlsx', index=False)
 
+# 엑셀 파일로 저장
+# df.to_excel('test.xlsx', index=False)
+
+# LDA 분석
+analysis_gpt(df)
 #########################[슬랙에 메시지 보내기]#########################
 # slack_token = 'xoxb-6463685886582-6491398823217-bKDbTZlx1l4h19FrkRolJ5sY'
 #
